@@ -24,23 +24,23 @@ class rxNormApi extends APIBaseClass{
 	}
 	
 	public function getRxConceptProperties( $rxcui ){
-		return self::_request(self::$api_url.'/rxcui/{'.$rxcui.'}/properties');
+		return self::_request(self::$api_url.'/rxcui/'.$rxcui.'/properties');
 	}
 	public function getRelatedByRelationship( $rxcui, $relationship_list ){
-		return self::_request(self::$api_url.'/rxcui/{'.$rxcui.'}/related?rela='.$relationship_list);
+		return self::_request(self::$api_url."/rxcui/$rxcui/related?rela=$relationship_list");
 	}
 	public function getRelatedByType( $rxcui, $type_list ){
-		return self::_request(self::$api_url.'/rxcui/{'.$rxcui.'}/related?tty='.$type_list)
+		return self::_request(self::$api_url."/rxcui/$rxcui/related?tty=$type_list");
 	}
 	public function getAllRelatedInfo( $rxcui ){
-		return self::_request(self::$api_url.'/rxcui/{'.$rxcui.'}/allrelated');
+		return self::_request(self::$api_url."/rxcui/$rxcui/allrelated");
 	}
 	public function getDrugs( $name ){
 		return self::_request(self::$api_url."/drugs?name=$name");
 	}
 	
 	public function getNDCs( $rxcui ){
-		return self::_request(self::$api_url.'/rxcui/{'.$rxcui.'}/ndcs');
+		return self::_request(self::$api_url."/rxcui/$rxcui/ndcs");
 	}
 	
 	public function getRxNormVersion( ){
@@ -64,7 +64,7 @@ class rxNormApi extends APIBaseClass{
 	}
 	
 	public function getProprietaryInformation( $rxcui, $source_list, $proxyTicket ){
-		return self::_request(self::$api_url.'/rxcui/{'.$rxcui.'}/proprietary?srclist='.$source_list."&ticket=$proxyTicket");
+		return self::_request(self::$api_url."/rxcui/$rxcui/proprietary?srclist=$source_list&ticket=$proxyTicket");
 	}
 	
 	public function getMultiIngredBrand( $rxcui_list ){
@@ -76,23 +76,23 @@ class rxNormApi extends APIBaseClass{
 	}
 	
 	public function getStrength( $rxcui ){
-		return self::_request(self::$api_url.'/rxcui/{'.$rxcui.'}/strength');
+		return self::_request(self::$api_url."/rxcui/$rxcui/strength");
 	}
 	
 	public function getQuantity( $rxcui ){
-		return self::_request(self::$api_url.'/rxcui/{'.$rxcui.'}/quantity');
+		return self::_request(self::$api_url."/rxcui/$rxcui/quantity");
 	}
 	
 	public function getUNII( $rxcui ){
-		return self::_request(self::$api_url.'/rxcui/{'.$rxcui.'}/unii');
+		return self::_request(self::$api_url."/rxcui/$rxcui/unii");
 	}
 	
 	public function getSplSetId( $rxcui ){
-		return self::_request(self::$api_url.'/rxcui/{'.$rxcui.'}/splsetid');
+		return self::_request(self::$api_url."/rxcui/$rxcui/splsetid");
 	}
 	
 	public function findRemapped( $rxcui ){
-		return self::_request(self::$api_url.'/remap{'.$rxcui.'}');
+		return self::_request(self::$api_url."/remap/$rxcui");
 	}
 
 }
