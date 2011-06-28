@@ -1,0 +1,6 @@
+RxNorm RESTful Web API 
+http://rxnav.nlm.nih.gov/
+
+An alternative web service developed at the National Library of Medicine for the RxNorm data from the previously released SOAP-based RxNorm API web services. Representational state transfer (REST) is a style of software architecture for distributed hypermedia systems such as the World Wide Web. REST-style architectures consist of clients and servers. Clients initiate requests to servers; servers process requests and return appropriate responses. Requests and responses are built around the transfer of "representations" of "resources". A resource can be essentially any coherent and meaningful concept that may be addressed. A representation of a resource is typically a document that captures the current or intended state of a resource.
+
+The RxNorm RESTful web API is a simple web service implemented using HTTP and can be thought of as a collection of resources, specified as URIs. Some characteristics of the RxNorm RESTful web API: 
