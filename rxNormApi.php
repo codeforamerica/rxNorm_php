@@ -80,7 +80,7 @@ class rxNormApi extends APIBaseClass{
 	}
 	
 	public function getQuantity( $rxcui ){
-		return self::_request(s"/rxcui/$rxcui/quantity",'get');
+		return self::_request("/rxcui/$rxcui/quantity",'get');
 	}
 	
 	public function getUNII( $rxcui ){
