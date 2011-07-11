@@ -1,14 +1,10 @@
 Overview
 ========
-NDF-RT API PHP Library
+RxNorm API PHP Library in REST with SOAP style methods
 
+http://rxnav.nlm.nih.gov/ 
 Usage
 =====
-http://rxnav.nlm.nih.gov/NdfrtAPI.html
-
-The NDF-RT API is a web service for accessing the current 
-National Drug File - Reference Terminology (NDF-RT) data set from your program via SOAP/WSDL.
-
 // Base API Class
 require 'APIBaseClass.php';
 
