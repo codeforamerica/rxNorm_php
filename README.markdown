@@ -2,6 +2,8 @@ Overview
 ========
 RxNorm API PHP Library in REST with SOAP style methods
 
+A Semantic Navigation Tool for Clinical Drugs 
+
 http://rxnav.nlm.nih.gov/ 
 Usage
 =====
