@@ -31,8 +31,8 @@ class APIBaseClass {
 		
 		$url = $this->_root . $path;
 		curl_setopt($this->_http, CURLOPT_URL, $url);
-		if($headers) curl_setopt($this->_http, CURLOPT_HTTPHEADER, $headers);
-
+		if($headers) curl_setopt($this->_http, CURLOPT_HTTPHEADER, array($headers));
+		
 		curl_setopt($this->_http, CURLOPT_CUSTOMREQUEST, $method);
 
 		$result = curl_exec($this->_http);
