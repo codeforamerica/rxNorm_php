@@ -11,12 +11,12 @@ require_once('simpletest/autorun.php');
 // load baseclass 
 require_once('APIBaseClass.php');
 // load your class here...
-require_once('toxnetApi.php');
+require_once('rxNormApi.php');
 // the name of the api class is 'yourApi'
 class TestOfApiClass extends UnitTestCase {
    public $api;
    // put your class name here
-   public static $class_name = 'toxnetApi';
+   public static $class_name = 'rxNormApi';
     function testApiConstructs(){
     	$this->api = new self::$class_name();
     	$this->check_class_params('_http _root api_url');
@@ -46,4 +46,3 @@ class TestOfApiClass extends UnitTestCase {
     }
 }
 ?>
-
