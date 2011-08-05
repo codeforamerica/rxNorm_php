@@ -29,7 +29,7 @@ echo $new->getRxConceptProperties('131725');
 // Example of setting json output
 $new->setOutputType('json');
 
-echo $new->getRelatedByType('174742','SBD+SBDF');
+echo $new->getRelatedByType('SBD+SBDF','174742');
 
 echo $new->getAllRelatedInfo('866350');
 
@@ -50,7 +50,7 @@ echo $new->getSourceTypes();
 echo $new->getTermTypes();
 
 // doesn't properly process source_list variable, hard to test without valid tokens...
-echo $new->getProprietaryInformation('261455','xhruziw05Y','MSH+RXNORM');
+echo $new->getProprietaryInformation('xhruziw05Y','MSH+RXNORM','261455');
 
 echo $new->getMultiIngredBrand('8896+20610');
 
