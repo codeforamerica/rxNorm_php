@@ -4,95 +4,123 @@
 class rxNormApi extends APIBaseClass{
 // would like to some day implement this in SOAP...
 
-	public static $api_url = 'http://rxnav.nlm.nih.gov/REST';
-	
-	public function __construct($url=NULL)
-	{
-		parent::new_request(($url?$url:self::$api_url));
-	}
-	public function findRxcuiByString( $searchString, $source_list, $allSourcesFlag, $searchType ){
-	// is 'name' search type?
-		return self::_request("/rxcui?name=$searchType&srclist=$source_list&allsrc=$allSourcesFlag&search=$searchString",'GET');
-	
-	}
-	public function findRxcuiByID($idType,$id,$allSourcesFlag){
-		return self::_request("/rxcui?idtype=$idType&id=$id&allsrc=$allSourcesFlag",'GET');
-	}		
+        public static $api_url = 'http://rxnav.nlm.nih.gov/REST';
 
-	public function getSpellingSuggestions( $searchString ){
-		return self::_request("/spellingsuggestions?name=$searchString",'GET');
-	}
-	
-	public function getRxConceptProperties( $rxcui ){
-		return self::_request('/rxcui/'.$rxcui.'/properties');
-	}
-	public function getRelatedByRelationship( $rxcui, $relationship_list ){
-		return self::_request("/rxcui/$rxcui/related?rela=$relationship_list",'GET');
-	}
-	public function getRelatedByType( $rxcui, $type_list ){
-		return self::_request("/rxcui/$rxcui/related?tty=$type_list",'GET');
-	}
-	public function getAllRelatedInfo( $rxcui ){
-		return self::_request("/rxcui/$rxcui/allrelated",'GET');
-	}
-	public function getDrugs( $name ){
-		return self::_request("/drugs?name=$name",'GET');
-	}
-	
-	public function getNDCs( $rxcui ){
-		return self::_request("/rxcui/$rxcui/ndcs",'GET');
-	}
-	
-	public function getRxNormVersion(){
-		return self::_request('/version','GET');
-	}
-	
-	public function getIdTypes(){
-		return self::_request('/idtypes','GET');
-	}
-	
-	public function getRelaTypes(){
-		return self::_request('/relatypes','GET');
-	}
-	
-	public function getSourceTypes(){
-		return self::_request("/sourcetypes",'GET');
-	}
-	
-	public function getTermTypes(){
-		return self::_request("/termtypes",'GET');
-	}
-	
-	public function getProprietaryInformation( $rxcui, $source_list, $proxyTicket ){
-		return self::_request("/rxcui/$rxcui/proprietary?srclist=$source_list&ticket=$proxyTicket",'GET');
-	}
-	
-	public function getMultiIngredBrand( $rxcui_list ){
-		return self::_request("/brands?ingredientids=$rxcui_list",'GET');
-	}
-	// assume this is get display names too ??
-	public function getDisplayTerms(){
-		return self::_request("/displaynames",'GET');
-	}
-	
-	public function getStrength( $rxcui ){
-		return self::_request("/rxcui/$rxcui/strength",'GET');
-	}
-	
-	public function getQuantity( $rxcui ){
-		return self::_request("/rxcui/$rxcui/quantity",'GET');
-	}
-	
-	public function getUNII( $rxcui ){
-		return self::_request("/rxcui/$rxcui/unii",'GET');
-	}
-	
-	public function getSplSetId( $rxcui ){
-		return self::_request("/rxcui/$rxcui/splsetid",'GET');
-	}
-	
-	public function findRemapped( $rxcui ){
-		return self::_request("/remap/$rxcui",'GET');
-	}
+
+        public function _request($path,$method,$data=NULL){
+                if ($this->output_type == 'json')
+                        return parent::_request($path,$method,$data,"Accept:application/json");
+                else
+                        return parent::_request($path,$method,$data,"Accept:application/xml");
+        }
+        public function __construct($url=NULL)
+        {
+                $this->output_type = 'xml';
+                parent::new_request(($url?$url:self::$api_url));
+        }
+
+        public function setOutputType($type){
+                if($type != $this->output_type)
+                        $this->output_type = ($type != 'xml'?'json':'xml');
+        }
+        public function findRxcuiByString( $name, $searchString =NULL,$searchType=NULL,$source_list=NULL, $allSourcesFlag=NULL){
+                $data['name'] = $name;
+                if($allSourcesFlag =! NULL ){
+                        $data['allsrc'] = $allSourcesFlag;
+                        if($source_list != NULL && $allSourcesFlag == 1) $data['srclist'] = $source_list;
+                }
+                if($searchString != NULL)
+                        $data['search']=$searchString;
+                return self::_request("/rxcui",'GET',$data);
+
+        }
+        public function findRxcuiByID($idType,$id,$allSourcesFlag=NULL){
+                $data['idtype'] = $idType;
+                $data['id'] = $id;
+                if($allSourcesFlag != NULL ) $data['allsrc'] = $allSourcesFlag;
+                return self::_request("/rxcui?idtype=$idType&id=$id&allsrc=$allSourcesFlag",'GET');
+        }
+
+        public function getSpellingSuggestions( $searchString ){
+                return self::_request("/spellingsuggestions?name=$searchString",'GET');
+        }
+
+        public function getRxConceptProperties( $rxcui ){
+                return self::_request('/rxcui/'.$rxcui.'/properties','GET');
+        }
+        public function getRelatedByRelationship( $rxcui, $relationship_list ){
+                return self::_request("/rxcui/$rxcui/related?rela=$relationship_list",'GET');
+        }
+        public function getRelatedByType( $rxcui, $type_list ){
+                return self::_request("/rxcui/$rxcui/related?tty=$type_list",'GET');
+        }
+        public function getAllRelatedInfo( $rxcui ){
+                return self::_request("/rxcui/$rxcui/allrelated",'GET');
+        }
+        public function getDrugs( $name ){
+                return self::_request("/drugs?name=$name",'GET');
+        }
+
+        public function getNDCs( $rxcui ){
+                return self::_request("/rxcui/$rxcui/ndcs",'GET');
+        }
+
+        public function getRxNormVersion(){
+                return self::_request('/version','GET');
+        }
+
+        public function getIdTypes(){
+                return self::_request('/idtypes','GET');
+        }
+
+        public function getRelaTypes(){
+                return self::_request('/relatypes','GET');
+        }
+
+        public function getSourceTypes(){
+                return self::_request("/sourcetypes",'GET');
+        }
+
+        public function getTermTypes(){
+                return self::_request("/termtypes",'GET');
+        }
+
+        public function getProprietaryInformation( $rxcui, $proxyTicket,$source_list=NULL ){
+                $data['ticket']= $proxyTicket;
+                if($source_list != NULL) $data['srclist'] = $source_list;
+                return self::_request("/rxcui/$rxcui/proprietary",'GET',$data);
+        }
+
+        public function getMultiIngredBrand( $rxcui_list ){
+                return self::_request("/brands?ingredientids=$rxcui_list",'GET');
+        }
+        // assume this is get display names too ??
+        public function getDisplayTerms(){
+                return self::_request("/displaynames",'GET');
+        }
+
+        public function getStrength( $rxcui ){
+                return self::_request("/rxcui/$rxcui/strength",'GET');
+        }
+
+        public function getQuantity( $rxcui ){
+                return self::_request("/rxcui/$rxcui/quantity",'GET');
+        }
+
+        public function getUNII( $rxcui ){
+                return self::_request("/rxcui/$rxcui/unii",'GET');
+        }
+
+        public function getSplSetId( $idType,$id,$allsrc=NULL ){
+
+                $data['idtype'] = $idType;
+                $data['id'] = $id;
+                if($allsrc != NULL) $data['allsrc']=$allsrc;
+                return self::_request("/rxcui",'GET',$data);
+        }
+
+        public function findRemapped( $rxcui ){
+                return self::_request("/remap/$rxcui",'GET');
+        }
 
 }
