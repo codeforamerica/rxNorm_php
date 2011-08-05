@@ -6,13 +6,6 @@ class rxNormApi extends APIBaseClass{
 
         public static $api_url = 'http://rxnav.nlm.nih.gov/REST';
 
-
-        public function _request($path,$method,$data=NULL){
-                if ($this->output_type == 'json')
-                        return parent::_request($path,$method,$data,"Accept:application/json");
-                else
-                        return parent::_request($path,$method,$data,"Accept:application/xml");
-        }
         public function __construct($url=NULL)
         {
                 $this->output_type = 'xml';
@@ -27,11 +20,19 @@ class rxNormApi extends APIBaseClass{
                 $this->rxcui = $rxcui;
         }
 
+        public function _request($path,$method,$data=NULL){
+                if ($this->output_type == 'json')
+                        return parent::_request($path,$method,$data,"Accept:application/json");
+                else
+                        return parent::_request($path,$method,$data,"Accept:application/xml");
+        }
+
         public function getRxcui($rxcui=NULL){
                 if($rxcui != NULL) return $rxcui;
                 elseif($this->rxcui) return $this->rxcui;
         }
-        public function findRxcuiByString( $name, $searchString =NULL,$searchType=NULL,$source_list=NULL, $allSourcesFlag=NULL)    {
+        public function findRxcuiByString( $name, $searchString =NULL,$searchType=NULL,$source_list=NULL, $allSourcesFlag=NULL)      
+        \{
                 $data['name'] = $name;
                 if($allSourcesFlag =! NULL ){
                         $data['allsrc'] = $allSourcesFlag;
@@ -98,7 +99,8 @@ class rxNormApi extends APIBaseClass{
                 return self::_request("/termtypes",'GET');
         }
 
-        public function getProprietaryInformation( $rxcui, $proxyTicket,$source_list=NULL ){
+        public function getProprietaryInformation($proxyTicket,$source_list=NULL,$rxcui=NULL ){
+                $rxcui = self::getRxcui($rxcui);
                 $data['ticket']= $proxyTicket;
                 if($source_list != NULL) $data['srclist'] = $source_list;
                 return self::_request("/rxcui/$rxcui/proprietary",'GET',$data);
@@ -112,15 +114,18 @@ class rxNormApi extends APIBaseClass{
                 return self::_request("/displaynames",'GET');
         }
 
-        public function getStrength( $rxcui ){
+        public function getStrength( $rxcui = NULL ){
+                $rxcui = self::getRxcui($rxcui);
                 return self::_request("/rxcui/$rxcui/strength",'GET');
         }
 
-        public function getQuantity( $rxcui ){
+        public function getQuantity( $rxcui = NULL ){
+                $rxcui = self::getRxcui($rxcui);
                 return self::_request("/rxcui/$rxcui/quantity",'GET');
         }
 
-        public function getUNII( $rxcui ){
+        public function getUNII( $rxcui = NULL ){
+                $rxcui = self::getRxcui($rxcui);
                 return self::_request("/rxcui/$rxcui/unii",'GET');
         }
 
@@ -132,7 +137,7 @@ class rxNormApi extends APIBaseClass{
                 return self::_request("/rxcui",'GET',$data);
         }
 
-        public function findRemapped( $rxcui ){
+        public function findRemapped( $rxcui = NULL ){
                 return self::_request("/remap/$rxcui",'GET');
         }
 
