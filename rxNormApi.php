@@ -23,7 +23,15 @@ class rxNormApi extends APIBaseClass{
                 if($type != $this->output_type)
                         $this->output_type = ($type != 'xml'?'json':'xml');
         }
-        public function findRxcuiByString( $name, $searchString =NULL,$searchType=NULL,$source_list=NULL, $allSourcesFlag=NULL){
+        public function setRxcui($rxcui){
+                $this->rxcui = $rxcui;
+        }
+
+        public function getRxcui($rxcui=NULL){
+                if($rxcui != NULL) return $rxcui;
+                elseif($this->rxcui) return $this->rxcui;
+        }
+        public function findRxcuiByString( $name, $searchString =NULL,$searchType=NULL,$source_list=NULL, $allSourcesFlag=NULL)    {
                 $data['name'] = $name;
                 if($allSourcesFlag =! NULL ){
                         $data['allsrc'] = $allSourcesFlag;
@@ -45,23 +53,28 @@ class rxNormApi extends APIBaseClass{
                 return self::_request("/spellingsuggestions?name=$searchString",'GET');
         }
 
-        public function getRxConceptProperties( $rxcui ){
+        public function getRxConceptProperties( $rxcui = NULL ){
+                $rxcui = self::getRxcui($rxcui);
                 return self::_request('/rxcui/'.$rxcui.'/properties','GET');
         }
-        public function getRelatedByRelationship( $rxcui, $relationship_list ){
+        public function getRelatedByRelationship( $relationship_list , $rxcui = NULL ){
+                $rxcui = self::getRxcui($rxcui);
                 return self::_request("/rxcui/$rxcui/related?rela=$relationship_list",'GET');
         }
-        public function getRelatedByType( $rxcui, $type_list ){
+        public function getRelatedByType($type_list, $rxcui = NULL ){
+                $rxcui = self::getRxcui($rxcui);
                 return self::_request("/rxcui/$rxcui/related?tty=$type_list",'GET');
         }
-        public function getAllRelatedInfo( $rxcui ){
+        public function getAllRelatedInfo( $rxcui = NULL ){
+                $rxcui = self::getRxcui($rxcui);
                 return self::_request("/rxcui/$rxcui/allrelated",'GET');
         }
         public function getDrugs( $name ){
                 return self::_request("/drugs?name=$name",'GET');
         }
 
-        public function getNDCs( $rxcui ){
+        public function getNDCs( $rxcui = NULL){
+                $rxcui = self::getRxcui($rxcui);
                 return self::_request("/rxcui/$rxcui/ndcs",'GET');
         }
 
