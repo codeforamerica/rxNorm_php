@@ -7,7 +7,7 @@ wget http://downloads.sourceforge.net/project/simpletest/simpletest/simpletest_1
 tar -zxf simpletest_1.1alpha3.tar.gz;
 
 */
-require_once('simpletest/autorun.php');
+require_once('/var/www/api/simpletest/autorun.php');
 // load baseclass 
 require_once('APIBaseClass.php');
 // load your class here...
@@ -19,6 +19,29 @@ class TestOfApiClass extends UnitTestCase {
    public static $class_name = 'rxNormApi';
     function testApiConstructs(){
     	$this->api = new self::$class_name();
+	$this->assertIsA($this->api->findRxcuiByString('lipitor'), 'string');
+	$this->assertIsA($this->api->findRxcuiByID('umlscui','C0487782'), 'string');
+	$this->assertIsA($this->api->getSpellingSuggestions('ambienn'), 'string');
+	$this->assertIsA($this->api->getRxConceptProperties('131725'), 'string');
+	$this->assertIsA($this->api->getRelatedByType('SBD+SBDF','174742'), 'string');
+	$this->assertIsA($this->api->getAllRelatedInfo('866350'), 'string');
+	$this->assertIsA($this->api->getDrugs('cymbalta'), 'string');
+	$this->assertIsA($this->api->findRxcuiByString('lipitor'), 'string');
+	$this->assertIsA($this->api->getNDCs('213269'), 'string');
+	$this->assertIsA($this->api->getRxNormVersion(), 'string');
+	$this->assertIsA($this->api->getIdTypes(), 'string');
+	$this->assertIsA($this->api->getRelaTypes(), 'string');
+	$this->assertIsA($this->api->getSourceTypes(), 'string');
+	$this->assertIsA($this->api->getTermTypes(), 'string');
+	$this->assertIsA($this->api->getProprietaryInformation('xhruziw05Y','MSH+RXNORM','261455'), 'string');
+	$this->assertIsA($this->api->getMultiIngredBrand('8896+20610'), 'string');
+	$this->assertIsA($this->api->getDisplayTerms(), 'string');
+	$this->assertIsA($this->api->getStrength('315246'), 'string');
+	$this->assertIsA($this->api->getQuantity('207716'), 'string');
+	$this->assertIsA($this->api->getUNII('161'), 'string');
+	$this->assertIsA($this->api->getSplSetId('umlscui','C0487782'), 'string');
+	$this->assertIsA($this->api->findRemapped('105048'), 'string');
+
     	$this->check_class_params('_http _root api_url');
     }
 
