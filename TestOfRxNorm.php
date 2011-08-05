@@ -7,7 +7,7 @@ wget http://downloads.sourceforge.net/project/simpletest/simpletest/simpletest_1
 tar -zxf simpletest_1.1alpha3.tar.gz;
 
 */
-require_once('/var/www/api/simpletest/autorun.php');
+require_once('simpletest/autorun.php');
 // load baseclass 
 require_once('APIBaseClass.php');
 // load your class here...
