@@ -32,7 +32,7 @@ class rxNormApi extends APIBaseClass{
                 elseif($this->rxcui) return $this->rxcui;
         }
         public function findRxcuiByString( $name, $searchString =NULL,$searchType=NULL,$source_list=NULL, $allSourcesFlag=NULL)      
-        \{
+        {
                 $data['name'] = $name;
                 if($allSourcesFlag =! NULL ){
                         $data['allsrc'] = $allSourcesFlag;
