@@ -7,6 +7,7 @@ A Semantic Navigation Tool for Clinical Drugs
 http://rxnav.nlm.nih.gov/ 
 Usage
 =====
+<pre>
 // Base API Class
 
 require 'APIBaseClass.php';
@@ -70,3 +71,4 @@ echo $new->findRemapped('105048');
 // Debug information
 die(print_r($new).print_r(get_object_vars($new)).print_r(get_class_methods(get_class($new))));
 
+</pre>
