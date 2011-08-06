@@ -6,11 +6,87 @@ class rxNormApi extends APIBaseClass{
 
         public static $api_url = 'http://rxnav.nlm.nih.gov/REST';
 
+	public $sourceTypes = Array
+        (
+		'GS',
+            	'MDDB',
+		'MMSL',
+	        'MMX',
+	        'MSH',
+	        'MTHFDA',
+	        'MTHSPL',
+	        'NDDF',
+		'NDFRT',
+	        'RXNORM',
+	        'SNOMEDCT',
+	        'VANDF',
+        );
+
+	public $idTypes = Array
+	(
+		'AMPID',
+		'GCN_SEQNO',
+		'GFC',
+		'GPPC',
+		'HIC_SEQN',
+		'LISTING_SEQ_NO',
+		'MESH',
+		'MMSL_CODE',
+		'NDC', 
+		'NUI',
+		'SNOMEDCT',
+		'SPL_SET_ID',
+		'UMLSCUI',
+		'UNII_CODE'
+		'VUID'
+	);
+
+	public $relaTypes = Array
+	(
+		'consists_of',
+		'constitutes',
+		'contained_in',
+		'contains',
+		'dose_form_of',
+		'form_of',
+		'has_dose_form',
+		'has_form',
+		'has_ingredient',
+		'has_ingredients',
+		'has_part',
+		'has_precise_ingredient',
+		'has_quantified_form',
+		'has_tradename',
+		'ingredient_of',
+		'ingredients_of', 
+		'inverse_isa',
+		'isa',
+		'part_of',
+		'precise_ingredient_of',
+		'quantified_form_of',
+		'reformulated_to',
+		'reformulation_of',
+		'tradename_of');
         public function __construct($url=NULL)
         {
                 $this->output_type = 'xml';
                 parent::new_request(($url?$url:self::$api_url));
-        }
+        //	self::discover_api();
+	}
+	function discover_api(){
+	// designed to run the built in api functions (if the exist) to get valid values for some api method calls
+
+        	$idTypes = new SimpleXMLElement($this->getIdTypes());
+		$this->idTypes = xml_to_array($idTypes,'idTypeList','idName');
+
+	        $relaTypes = new SimpleXMLElement($this->getRelaTypes());        
+        	$this->relaTypes = xml_to_array($relaTypes,'relationTypeList','relationType');
+
+        	$sourceTypes = new SimpleXMLElement($this->getSourceTypes());
+        	$this->sourceTypes = xml_to_array($sourceTypes,'sourceTypeList','sourceName');
+
+	}
+
 
         public function setOutputType($type){
                 if($type != $this->output_type)
